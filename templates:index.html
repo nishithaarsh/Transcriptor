@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Python Transcription Webpage</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Python Transcription Webpage</h1>
+
+    <form action="/transcribe" method="post" enctype="multipart/form-data">
+        <input type="file" name="audio" accept="audio/*" required>
+        <button type="submit">Transcribe</button>
+    </form>
+
+    {% if transcription %}
+        <h2>Transcription Result:</h2>
+        <div id="transcription">{{ transcription | safe }}</div>
+        <button onclick="copyText()">Copy Transcription</button>
+    {% endif %}
+
+    <script>
+        function copyText() {
+            var text = document.getElementById("transcription").innerText;
+            navigator.clipboard.writeText(text).then(function() {
+                alert("Transcription copied to clipboard!");
+            });
+        }
+    </script>
+</body>
+</html>
